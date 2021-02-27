@@ -1,10 +1,10 @@
 /*
 
-    YABASIC ---  a simple Basic Interpreter
-    written by Marc Ihm 1995-2019
+    YABASIC  ---  a simple Basic Interpreter
+    written by Marc Ihm 1995-2021
     more info at www.yabasic.de
 
-    io.c --- code for screen and file i/o
+    io.c -- code for screen and file i/o
 
     This file is part of yabasic and may be copied under the terms of
     MIT License which can be found in the file LICENSE.
@@ -106,7 +106,7 @@ create_print(char type)	/* create command 'print' */
 {
     struct command *cmd;
 
-    cmd = add_command(cPRINT, NULL, NULL);
+    cmd = add_command(cPRINT);
     cmd->pointer = my_malloc(sizeof (int));
     /* store type of print  */
     cmd->tag = type;
@@ -271,7 +271,7 @@ curinit(void)			/* initialize curses */
 #endif
 
 #ifdef UNIX
-    if (tcsetpgrp(STDIN_FILENO, getpid())) {
+    if (tcsetpgrp(STDIN_FILENO, getpgid(getpid()))) {
 	sprintf(string,"could not get control of terminal: %s",
                 my_strerror(errno));
         error (sERROR,string);
@@ -689,7 +689,7 @@ create_myopen(int num)		/* create command 'myopen' */
 {
     struct command *cmd;
 
-    cmd = add_command(cOPEN, NULL, NULL);
+    cmd = add_command(cOPEN);
     cmd->tag = num;
 }
 
@@ -857,7 +857,7 @@ myclose(void)			/* close the specified stream */
 #endif
 
     s = (int)pop(stNUMBER)->value;
-    if (abs(s) == STDIO_STREAM || badstream(s, 0)) {
+    if (badstream(s, 0)) {
         return;
     }
     if (stream_modes[s] == mCLOSED) {
@@ -918,7 +918,7 @@ myseek(struct command *cmd)	/* reposition file pointer */
         return;
     }
     my_free(mode);
-    if (abs(s) == STDIO_STREAM || badstream(s, 0)) {
+    if (badstream(s, 0)) {
         return;
     }
     if (!(stream_modes[s] & (mREAD | mWRITE))) {
@@ -941,7 +941,7 @@ create_pps(int type, int input)	/* create command push_stream or pop_stream */
 {
     struct command *cmd;
 
-    cmd = add_command(type, NULL, NULL);
+    cmd = add_command(type);
     cmd->args = input;
 }
 
@@ -1044,13 +1044,14 @@ checkstream(void)		/* test if currst is still valid */
 
 
 void
-testeof(struct command *cmd)	/* close the specified stream */
+testeof(struct command *cmd)	/* check if specified stream is at eof */
 {
     int s, c;
     struct stackentry *result;
+    FILE *str;
 
     s = (int)pop(stNUMBER)->value;
-    if (s != STDIO_STREAM && badstream(s, 0)) {
+    if (s && badstream(s, 0)) {
         return;
     }
     result = push();
@@ -1059,18 +1060,15 @@ testeof(struct command *cmd)	/* close the specified stream */
         result->value = 1.;
         return;
     }
-    if (!s) {
-        result->value = 0.;
-        return;
-    }
-    c = getc(streams[s]);
+    str = s ? streams[s] : stdin ;
+    c = getc(str);
     if (c == EOF) {
         result->value = 1.;
         return;
     }
 
     result->value = 0.;
-    ungetc(c, streams[s]);
+    ungetc(c, str);
     return;
 }
 
@@ -1098,7 +1096,7 @@ create_myread(char type, int tileol)	/* create command 'read' */
 {
     struct command *cmd;
 
-    cmd = add_command(cREAD, NULL, NULL);
+    cmd = add_command(cREAD);
     cmd->args = tileol;		/* true, if read should go til eol */
     cmd->tag = type;		/* can be 'd' or 's' */
 }
@@ -1296,7 +1294,7 @@ create_onestring(char *str)	/* create command 'onestring' */
 {
     struct command *cmd;
 
-    cmd = add_command(cONESTRING, NULL, NULL);
+    cmd = add_command(cONESTRING);
     cmd->pointer = my_strdup(str);
 }
 
@@ -1342,7 +1340,7 @@ create_colour(int flag)	/* create command 'colour' */
 {
     struct command *c;
 
-    c = add_command(cCOLOUR, NULL, NULL);
+    c = add_command(cCOLOUR);
     c->args = flag;
 }
 
