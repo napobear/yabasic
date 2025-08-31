@@ -58,7 +58,7 @@ void frnbf_free() {
   no_frn_error();
   return;
 }
-int frnbf_size() {
+int frnbf_size(void) {
   no_frn_error();
   return 0;
 }
@@ -126,13 +126,13 @@ union FFI_VAL {
 
 /* ------------- local functions ---------------- */
 static int frn_decode_ffi_type(char *, ffi_type **, char **, int);
-static int frnfn_parse_stack();
+static int frnfn_parse_stack(void);
 static void frn_cast_to_ffi_type(union FFI_VAL *, ffi_type *, double);
 static double frn_cast_from_ffi_type(union FFI_VAL *, ffi_type *);
-static void frnfn_cleanup();
+static void frnfn_cleanup(void);
 static int frnbf_parse_handle(char *, int *, void **);
 static int frnbf_verify_not_null(int);
-
+  
 /* ------------- global variables ---------------- */
 
 char *libname = NULL; /* name of library to call */
@@ -310,7 +310,7 @@ void frnbf_free() /* free a foreign buffer */
   return;
 }
 
-int frnbf_size() /* get size of buffer */
+int frnbf_size(void) /* get size of buffer */
 {
   int size;
   char *ptr;
@@ -531,7 +531,7 @@ static int frnbf_verify_not_null(
   return TRUE;
 }
 
-static int frnfn_parse_stack() /* verify and process arguments from yabasic
+static int frnfn_parse_stack(void) /* verify and process arguments from yabasic
                                   stack into libffi structures */
 {
   struct stackentry *st, *stfirst, *stfirstarg;
@@ -821,7 +821,7 @@ static double frn_cast_from_ffi_type(
   return 0.0;
 }
 
-static void frnfn_cleanup() /* free and cleanup structures after use */
+static void frnfn_cleanup(void) /* free and cleanup structures after use */
 {
   if (lib) {
     if (opt_unload_library) {

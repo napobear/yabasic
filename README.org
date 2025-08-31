@@ -18,6 +18,8 @@
   part of this repo. So almost any request regarding yabasic (language, documentation,
   windows-setup, website) can be handled (as pull-request or issue) in this repo.
 
+  To update the table of content for this file, invoke 'toc-org-insert-toc'.
+     
 * Table of Content :TOC_3:
 - [[#yabasic---a-simple-basic-interpreter-for-unix-and-windows][Yabasic - A simple Basic interpreter for Unix and Windows.]]
 - [[#the-three-top-level-directories][The three top-level directories]]
@@ -127,8 +129,8 @@
    which e.g. invokes the Visual Studio C-Compiler in turn.
    
 ** Notes for the maintainer of yabasic
-   
-   To update the table of content for this file, invoke 'toc-org-insert-toc'.
+
+   Remark: If you simply want to build yabasic, please see above under "Building under Unix".
    
    To build yabasic both under Unix and Windows and to update the website www.yabasic.de, go
    through the steps below. The process is mostly automated, only asking for confirmation at

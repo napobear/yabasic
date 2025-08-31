@@ -4,8 +4,8 @@
     written by Marc Ihm 1995-2025
     more info at www.yabasic.de
 
-    symbol.c -- code for symbols, stack and library management, handling of
-   arrays
+    symbol.c -- code for symbols, stack and library management,
+    handling of arrays
 
     This file is part of yabasic and may be copied under the terms of
     MIT License which can be found in the file LICENSE.
@@ -531,7 +531,7 @@ void popgoto() /* bison: pops a goto and generates the matching command */
   create_goto(pop(stGOTO)->pointer); /* and create it */
 }
 
-void storelabel() /* bison: push label on stack */
+void storelabel(void) /* bison: push label on stack */
 {
   char *st;
   struct stackentry *en;
@@ -544,7 +544,7 @@ void storelabel() /* bison: push label on stack */
   en->pointer = st;
 }
 
-void matchgoto() /* bison: generate goto matching label on stack */
+void matchgoto(void) /* bison: generate goto matching label on stack */
 {
   create_goto(stackhead->prev->pointer);
 }

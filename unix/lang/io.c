@@ -199,7 +199,7 @@ void print(struct command *cmd) /* print on screen */
   last = type;
 }
 
-void mymove() /* move to specific position on screen */
+void mymove(void) /* move to specific position on screen */
 {
   int x, y;
 #ifdef WINDOWS
@@ -234,7 +234,7 @@ void mymove() /* move to specific position on screen */
 #endif
 }
 
-void clearscreen() /* clear entire screen */
+void clearscreen(void) /* clear entire screen */
 {
 #ifdef WINDOWS
   DWORD written; /* number of chars actually written */

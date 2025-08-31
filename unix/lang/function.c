@@ -41,7 +41,8 @@ static int do_system(
     char *); /* hand over execution of command to system, return exit code */
 static char *do_system2(char *); /* hand over execution of command to system,
                                     return output as string */
-static double myrand();          /* generate random number in given range */
+static double myrand(void);          /* generate random number in given range */
+static char *recall_buff(void);      /* recall store buffer */
 
 /* ------------- global variables ---------------- */
 
@@ -976,7 +977,7 @@ static int do_system(
 #endif
 }
 
-static double myrand() {
+static double myrand(void) {
   long ran;
 
   ran = (((long)rand()) & 0x7fffL) << 15 | ((long)rand() & 0x7fffL);
@@ -1000,7 +1001,7 @@ static void store_buff(char *buff, int len) /* store system-input buffer */
   buffcount++;
 }
 
-char *recall_buff() /* recall store buffer */
+static char *recall_buff(void) /* recall store buffer */
 {
   struct buff_chain *curr, *old;
   char *result;
@@ -1436,7 +1437,7 @@ static char *fromto(char *str, int from,
   return part;
 }
 
-void mywait() /* wait given number of seconds */
+void mywait(void) /* wait given number of seconds */
 {
   double delay;
 
@@ -1462,7 +1463,7 @@ void mywait() /* wait given number of seconds */
 #endif
 }
 
-void mybell() /* ring ascii bell */
+void mybell(void) /* ring ascii bell */
 {
 #ifdef UNIX
   printf("\007");

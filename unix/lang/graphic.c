@@ -2845,7 +2845,7 @@ void x11_send_expose() {
 #endif
 }
 
-void determine_display_size() {
+void determine_display_size(void) {
   /* determine size of display and store within global vars */
   static int succeeded = FALSE;
 #ifdef UNIX

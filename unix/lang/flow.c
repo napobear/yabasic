@@ -24,6 +24,7 @@ extern int yyparse(); /* call bison parser */
 extern int switch_nesting;
 
 /* ------------- local functions ---------------- */
+static void load_pop_multi(struct command *, int); /* put correct value into preceding pop_multi-statement */
 
 /* ------------- global variables ---------------- */
 static struct command *labelroot = NULL; /* first label among commands */
@@ -674,7 +675,7 @@ void pop_multi(
   }
 }
 
-void load_pop_multi(
+static void load_pop_multi(
     struct command *cmd,
     int to_pop) /* put correct value into preceding pop_multi-statement */
 {
@@ -832,7 +833,7 @@ void next_case(struct command *cmd) /* find next_case_here statement */
   cmd->jump = currcmd = curr;
 }
 
-void findnop()
+void findnop(void)
 /* used for on_gosub, find trailing nop command */
 {
   while (currcmd->type != cNOP) {

@@ -1,4 +1,4 @@
-Version 2.91.3 (June 14, 2025)
-  - Fixed a bug with 'print reverse' under windows.
-  - Documentation
+Version 2.91.4 (August 31, 2025)
+  - Fixed compile-warnings for missing prototypes
+  - Some minor updates in toolchain
 

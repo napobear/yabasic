@@ -176,7 +176,7 @@ extern int winopened;		/* flag if window is open already */
 extern char *winorigin;		/* e.g. "lt","rc"; defines origin of grafic window */
 extern int winwidth, winheight;	/* size of window */
 extern int displaywidth, displayheight;  /* size of display */
-extern void determine_display_size(); /* determine size of display and store within global vars */
+extern void determine_display_size(void); /* determine size of display and store within global vars */
 /* mouse, console and keyboard */
 extern int mousex, mousey, mouseb, mousemod;	/* last know mouse coordinates */
 extern char *ykey[];		/* keys returned by inkey */
@@ -241,6 +241,8 @@ extern int missing_endif_line;
 void report_if_missing(char *,int);
 void report_conflicting_close(char *,int);
 void collect_missing_clauses(char *, char);
+void lyyerror(int, char *);
+
     
 /*-------------------------- defs and undefs ------------------------*/
 
@@ -556,12 +558,12 @@ void chkprompt (void);
 void create_myopen (int);
 void myopen (struct command *);
 void testeof (struct command *);
-void myclose ();
+void myclose (void);
 void create_pps (int, int);
 void push_stream (struct command *);
 void pop_stream (void);
-void mymove ();
-void clearscreen ();
+void mymove (void);
+void clearscreen (void);
 char *inkey (double);
 char *replace_escapes (char *);
 int count_backslashes(char *);
@@ -576,7 +578,7 @@ void putindrawmode (int);
 void dot (struct command *);
 void create_line (int);
 void line (struct command *);
-void moveorigin ();
+void moveorigin (char *);
 int check_alignement (char *);
 void circle (struct command *);
 void triangle (struct command *);
@@ -606,7 +608,7 @@ double frnfn_size (void);
 char *frnbf_alloc (void);
 void frnbf_free (void);
 char *frnbf_dump (int);
-int frnbf_size ();
+int frnbf_size (void);
 void frnbf_set (void);
 void frnbf_set2 (void);
 double frnbf_get (void);
@@ -618,7 +620,8 @@ void frnbf_set_buffer (void);
 void create_exception (int);
 void exception (struct command *);
 void create_poke (char);
-void poke ();
+//void poke (struct command *);
+void poke (struct command *);
 void pokefile (struct command *);
 void create_dblrelop (char);
 void dblrelop (struct command *);
@@ -640,8 +643,8 @@ void create_dbldata (double);
 void create_strdata (char *);
 void create_readdata (char);
 void readdata (struct command *);
-void mywait ();
-void mybell ();
+void mywait (void);
+void mybell (void);
 void getmousexybm (char *, int *, int *, int *, int *);
 void token (struct command *);
 void tokenalt (struct command *);
@@ -690,7 +693,7 @@ struct symbol *get_sym (char *, int, int);
 void link_symbols (struct symbol *, struct symbol *);
 void pushsymlist (void);
 void popsymlist (void);
-void dump_sym ();
+void dump_sym (void);
 void dump_sub (int);
 void function_or_array (struct command *);
 int count_args (int);
@@ -714,15 +717,15 @@ void pushgoto (void);
 void popgoto (void);
 void jump (struct command *);
 void myreturn (struct command *);
-void findnop ();
+void findnop (void);
 void skipper (void);
 void skiponce (struct command *);
 void resetskiponce (struct command *, int);
 void decide (void);
 void pushlabel (void);
 void poplabel (void);
-void storelabel ();
-void matchgoto ();
+void storelabel (void);
+void matchgoto (void);
 void create_check_return_value (int, int);
 void check_return_value (struct command *);
 void create_endfunction (void);
